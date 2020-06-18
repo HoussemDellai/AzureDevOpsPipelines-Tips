@@ -36,6 +36,16 @@ steps:
     commandOptions: '-detailed-exitcode'
     environmentServiceNameAzureRM: '$(subscription)'
 
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Visual Studio Enterprise(17b12858-3960-4e6f-a663-a06fdae23428)'
+    scriptType: 'ps'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      terraform plan -detailed-exitcode
+      Write-Host "LASTEXITCODE : $LASTEXITCODE"
+    workingDirectory: '$(System.DefaultWorkingDirectory)/skip-step'
+
 - task: PowerShell@2
   inputs:
     workingDirectory: '$(System.DefaultWorkingDirectory)/skip-step'
