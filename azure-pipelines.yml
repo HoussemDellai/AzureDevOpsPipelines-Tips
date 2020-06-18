@@ -38,6 +38,7 @@ steps:
 
 - task: PowerShell@2
   inputs:
+    workingDirectory: '$(System.DefaultWorkingDirectory)/skip-step'
     targetType: 'inline'
     script: |
       terraform plan -detailed-exitcode
