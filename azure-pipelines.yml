@@ -40,7 +40,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      Write-Host LASTEXITCODE : $LASTEXITCODE
+      Write-Host "LASTEXITCODE : $LASTEXITCODE"
 
 - task: TerraformTaskV1@0
   inputs:
