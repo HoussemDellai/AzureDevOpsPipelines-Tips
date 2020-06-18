@@ -33,7 +33,8 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    backendServiceArm: $(subscription)
+    workingDirectory: '$(System.DefaultWorkingDirectory)\skip-step'
+    backendServiceArm: '$(subscription)'
     backendAzureRmResourceGroupName: '$(resourceGroup)'
     backendAzureRmStorageAccountName: '$(storageAccount)'
     backendAzureRmContainerName: '$(container)'
@@ -43,11 +44,13 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'plan'
-    environmentServiceNameAzureRM: $(subscription)
+    workingDirectory: '$(System.DefaultWorkingDirectory)\skip-step'
+    environmentServiceNameAzureRM: '$(subscription)'
 
 
 - task: TerraformTaskV1@0
   inputs:
     provider: 'azurerm'
     command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)\skip-step'
     environmentServiceNameAzureRM: $(subscription)
