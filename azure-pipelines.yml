@@ -44,7 +44,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'plan'
-    workingDirectory: '$(System.DefaultWorkingDirectory)\skip-step'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/skip-step'
     environmentServiceNameAzureRM: '$(subscription)'
 
 
@@ -52,5 +52,5 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)\skip-step'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/skip-step'
     environmentServiceNameAzureRM: $(subscription)
