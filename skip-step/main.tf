@@ -10,6 +10,6 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "resourcegroup-test-tbd"
+  name     = "resourcegroup-test-tbd-2"
   location = "westeurope"
 }
