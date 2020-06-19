@@ -33,7 +33,8 @@ steps:
     provider: 'azurerm'
     command: 'plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)/skip-step'
-    commandOptions: '-detailed-exitcode -out=tfplan'
+    commandOptions: '-out=tfplan'
+    # commandOptions: '-detailed-exitcode -out=tfplan'
     environmentServiceNameAzureRM: '$(subscription)'
 
 - task: PowerShell@2
@@ -43,9 +44,8 @@ steps:
     script: |
       Write-Host "LASTEXITCODE : $LASTEXITCODE"
       terraform show -json tfplan
-      # terraform show -json
-      # terraform plan -detailed-exitcode
-      Write-Host "LASTEXITCODE : $LASTEXITCODE"
+      $plan = terraform show -json tfplan | ConvertFrom-Json
+      $plan.resource_changes.change.actions
 
 - task: TerraformTaskV1@0
   inputs:
