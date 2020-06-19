@@ -15,10 +15,12 @@ variables:
 steps:
 
 - task: TerraformInstaller@0
+  displayName: install Terraform v0.12.26
   inputs:
     terraformVersion: '0.12.26'
 
 - task: TerraformTaskV1@0
+  displayName: terraform init
   inputs:
     provider: 'azurerm'
     command: 'init'
@@ -30,6 +32,7 @@ steps:
     backendAzureRmKey: '$(tfstateFile)'
 
 - task: TerraformTaskV1@0
+  displayName: terraform plan -out=tfplan
   inputs:
     provider: 'azurerm'
     command: 'plan'
@@ -39,21 +42,27 @@ steps:
     environmentServiceNameAzureRM: '$(subscription)'
 
 - task: PowerShell@2
+  displayName: detect any terraform change
   inputs:
     workingDirectory: '$(System.DefaultWorkingDirectory)/skip-step'
     targetType: 'inline'
     script: |
-      Write-Host "LASTEXITCODE : $LASTEXITCODE"
+      # Write-Host "LASTEXITCODE : $LASTEXITCODE"
       $plan = $(terraform show -json tfplan | ConvertFrom-Json)
       $actions = $plan.resource_changes.change.actions
       Write-Host "Terraform actions : $actions"
       if (($actions -contains 'create') -or ($actions -contains 'delete') -or ($actions -contains 'update'))
       {
-        Write-Host "TF will perform the following actions : $actions"
+        Write-Host "Terraform will perform the following actions : $actions"
         Write-Host "##vso[task.setvariable variable=anyTfChanges;]true"
+      }
+      else
+      {
+        Write-Host "There is no change detected in Terraform tfplan file"
       }
 
 - task: TerraformTaskV1@0
+  displayName: terraform apply tfplan
   condition: eq(variables.anyTfChanges, true)
   inputs:
     provider: 'azurerm'
