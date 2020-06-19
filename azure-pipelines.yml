@@ -36,22 +36,12 @@ steps:
     commandOptions: '-detailed-exitcode'
     environmentServiceNameAzureRM: '$(subscription)'
 
-# - task: AzureCLI@2
-#   inputs:
-#     azureSubscription: '$(subscription)'
-#     scriptType: 'pscore'
-#     scriptLocation: 'inlineScript'
-#     inlineScript: |
-#       # terraform plan -detailed-exitcode
-#       Write-Host "LASTEXITCODE : $LASTEXITCODE"
-#     workingDirectory: '$(System.DefaultWorkingDirectory)/skip-step'
-
 - task: PowerShell@2
   inputs:
     workingDirectory: '$(System.DefaultWorkingDirectory)/skip-step'
     targetType: 'inline'
     script: |
-      # terraform show -json
+      terraform show -json
       # terraform plan -detailed-exitcode
       Write-Host "LASTEXITCODE : $LASTEXITCODE"
 
