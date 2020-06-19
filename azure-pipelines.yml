@@ -46,6 +46,7 @@ steps:
       Write-Host "LASTEXITCODE : $LASTEXITCODE"
       $plan = $(terraform show -json tfplan | ConvertFrom-Json)
       $actions = $plan.resource_changes.change.actions
+      Write-Host $actions
       if (($actions -contains 'create') -or ($actions -contains 'delete') -or ($actions -contains 'update'))
       {
         Write-Host "TF will either create, delete or update a resource"
