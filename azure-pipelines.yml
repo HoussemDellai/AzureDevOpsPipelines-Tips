@@ -52,7 +52,7 @@ steps:
     targetType: 'inline'
     script: |
       terraform show -json
-      terraform plan -detailed-exitcode
+      # terraform plan -detailed-exitcode
       Write-Host "LASTEXITCODE : $LASTEXITCODE"
 
 - task: TerraformTaskV1@0
