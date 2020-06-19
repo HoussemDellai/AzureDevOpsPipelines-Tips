@@ -51,7 +51,7 @@ steps:
       {
         Write-Host "TF will either create, delete or update a resource"
         # $(anyTfChanges)=true
-        $(anyTfChanges)
+        Write-Host $(anyTfChanges)
       }
 
 - task: TerraformTaskV1@0
