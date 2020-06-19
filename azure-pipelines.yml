@@ -51,7 +51,6 @@ steps:
       {
         Write-Host "TF will perform the following actions : $actions"
         Write-Host "##vso[task.setvariable variable=anyTfChanges;]true"
-        Write-Host $(anyTfChanges)
       }
 
 - task: TerraformTaskV1@0
