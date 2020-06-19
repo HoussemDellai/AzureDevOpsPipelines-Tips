@@ -50,6 +50,7 @@ steps:
       if (($actions -contains 'create') -or ($actions -contains 'delete') -or ($actions -contains 'update'))
       {
         Write-Host "TF will perform the following actions : $actions"
+        Write-Host "##vso[task.setvariable variable=anyTfChanges;]true"
         Write-Host $(anyTfChanges)
       }
 
