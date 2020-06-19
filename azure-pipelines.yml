@@ -38,7 +38,7 @@ steps:
 
 # - task: AzureCLI@2
 #   inputs:
-#     azureSubscription: 'Visual Studio Enterprise(17b12858-3960-4e6f-a663-a06fdae23428)'
+#     azureSubscription: '$(subscription)'
 #     scriptType: 'pscore'
 #     scriptLocation: 'inlineScript'
 #     inlineScript: |
@@ -51,7 +51,7 @@ steps:
     workingDirectory: '$(System.DefaultWorkingDirectory)/skip-step'
     targetType: 'inline'
     script: |
-      terraform show -json
+      # terraform show -json
       # terraform plan -detailed-exitcode
       Write-Host "LASTEXITCODE : $LASTEXITCODE"
 
