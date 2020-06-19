@@ -45,11 +45,15 @@ steps:
       Write-Host "LASTEXITCODE : $LASTEXITCODE"
       terraform show -json tfplan
       $plan = terraform show -json tfplan | ConvertFrom-Json
-      $plan.resource_changes.change.actions
+      $plan.resource_changes.change
+      $actions=$plan.resource_changes.change.actions
+      #"actions":["delete","create","update"]
+      # if ($actions.contains(...))
 
 - task: TerraformTaskV1@0
   inputs:
     provider: 'azurerm'
     command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)/skip-step'
-    environmentServiceNameAzureRM: $(subscription)
+    commandOptions: 'tfplan'
+    environmentServiceNameAzureRM: '$(subscription)'
