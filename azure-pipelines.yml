@@ -42,7 +42,7 @@ steps:
     scriptType: 'pscore'
     scriptLocation: 'inlineScript'
     inlineScript: |
-      terraform plan -detailed-exitcode
+      # terraform plan -detailed-exitcode
       Write-Host "LASTEXITCODE : $LASTEXITCODE"
     workingDirectory: '$(System.DefaultWorkingDirectory)/skip-step'
 
