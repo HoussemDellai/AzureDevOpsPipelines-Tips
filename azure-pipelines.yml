@@ -10,6 +10,7 @@ variables:
   storageAccount: terraformtfstateskip
   container: tfstate
   tfstateFile: terraform.tfstate
+  anyTfChanges: false
 
 steps:
 
@@ -43,14 +44,17 @@ steps:
     targetType: 'inline'
     script: |
       Write-Host "LASTEXITCODE : $LASTEXITCODE"
-      terraform show -json tfplan
-      $plan = terraform show -json tfplan | ConvertFrom-Json
-      $plan.resource_changes.change
-      $actions=$plan.resource_changes.change.actions
-      #"actions":["delete","create","update"]
-      # if ($actions.contains(...))
+      $plan = $(terraform show -json tfplan | ConvertFrom-Json)
+      $actions = $plan.resource_changes.change.actions
+      if (($actions -contains 'create') -or ($actions -contains 'delete') -or ($actions -contains 'update'))
+      {
+        Write-Host "TF will either create, delete or update a resource"
+        $(anyTfChanges)=true
+        $(anyTfChanges)
+      }
 
 - task: TerraformTaskV1@0
+  condition: eq(variables.anyTfChanges, true)
   inputs:
     provider: 'azurerm'
     command: 'apply'
