@@ -49,7 +49,7 @@ steps:
       if (($actions -contains 'create') -or ($actions -contains 'delete') -or ($actions -contains 'update'))
       {
         Write-Host "TF will either create, delete or update a resource"
-        $(anyTfChanges)=true
+        # $(anyTfChanges)=true
         $(anyTfChanges)
       }
 
